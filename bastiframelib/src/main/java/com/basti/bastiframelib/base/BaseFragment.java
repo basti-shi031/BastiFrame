@@ -1,7 +1,7 @@
 package com.basti.bastiframelib.base;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.basti.bastiframelib.network.NetworkCallback;
@@ -12,19 +12,18 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by SHIBW-PC on 2016/1/5.
+ * Created by Bowen on 2016-01-05.
  */
-public class BaseActivity extends AppCompatActivity implements NetworkCallback {
+public class BaseFragment extends Fragment implements NetworkCallback {
 
     private NetworkUtils mNetworkUtils;
     private LogUtils mLogUtils;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mNetworkUtils = new NetworkUtils(this);
-        mLogUtils = new LogUtils(this);
+        mLogUtils = new LogUtils(getActivity());
     }
 
     //post方法
@@ -44,10 +43,12 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     }
 
     @Override
-    public void onSuccess(int statusCode, Header[] headers, JSONObject result,int tag) {
+    public void onSuccess(int statusCode, Header[] headers, JSONObject result, int tag) {
+
     }
 
     @Override
-    public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable,int tag) {
+    public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable, int tag) {
+
     }
 }

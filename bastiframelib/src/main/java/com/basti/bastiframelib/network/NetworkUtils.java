@@ -1,14 +1,10 @@
 package com.basti.bastiframelib.network;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
-import com.basti.bastiframelib.utils.L;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
