@@ -1,5 +1,6 @@
 package com.basti.bastiframelib.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,8 +14,8 @@ public class SnackBarUtils {
 
     private Snackbar mSnackbar;
 
-    public SnackBarUtils(Context context,View v){
-        mSnackbar = Snackbar.make(v,"",Snackbar.LENGTH_SHORT);
+    public SnackBarUtils(Activity activity){
+        mSnackbar = Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),"",Snackbar.LENGTH_SHORT);
     }
 
     public void show(String message){
