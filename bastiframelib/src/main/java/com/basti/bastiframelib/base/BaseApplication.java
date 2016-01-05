@@ -2,6 +2,7 @@ package com.basti.bastiframelib.base;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -17,6 +18,7 @@ public class BaseApplication extends Application{
         //默认为调试模式
         setDebugMode(true);
         LeakCanary.install(this);
+        Fresco.initialize(this);
     }
 
     protected void setDebugMode(boolean debugMode){

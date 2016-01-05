@@ -1,6 +1,7 @@
 package com.basti.bastiframelib.base;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -58,9 +59,24 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
         mToastUtils.showToast(message);
     }
 
-    //显示SnackBar
+    //显示SnackBar，默认显示时间为Long
     protected void showSnackBar(String message){
         mSnackBarUtils.show(message);
+    }
+
+    //显示SnackBar,并能控制显示时间
+    protected void showSnackBar(String message,int duration){
+        mSnackBarUtils.show(message,duration);
+    }
+
+    //显示有操作的SnackBar,默认显示时间为Long
+    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener){
+        mSnackBarUtils.show(message,action,onClickListener);
+    }
+
+    //显示有操作的SnackBar,并能控制显示时间
+    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener,int duration){
+        mSnackBarUtils.show(message,action,onClickListener,duration);
     }
 
     //显示进度条 标题+信息
@@ -75,7 +91,7 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
 
     //显示/关闭进度条
     protected void showProgressDialog(boolean isShow){
-        showProgressDialog(isShow,"","");
+        showProgressDialog(isShow, "", "");
     }
 
     @Override

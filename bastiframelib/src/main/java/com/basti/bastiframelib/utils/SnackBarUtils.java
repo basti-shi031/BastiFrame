@@ -18,7 +18,39 @@ public class SnackBarUtils {
         mSnackbar = Snackbar.make(activity.getWindow().getDecorView().findViewById(android.R.id.content),"",Snackbar.LENGTH_SHORT);
     }
 
+    private void setAction(String action,View.OnClickListener onClickListener){
+        mSnackbar.setAction(action,onClickListener);
+    }
+
     public void show(String message){
+        setAction("",null);
+        setDuration(Snackbar.LENGTH_LONG);
+        showMessage(message);
+    }
+
+    public void show(String message,int duration){
+        setAction("",null);
+        setDuration(duration);
+        showMessage(message);
+    }
+
+    public void show(String message,String action,View.OnClickListener onClickListener){
+        setAction(action,onClickListener);
+        setDuration(Snackbar.LENGTH_LONG);
+        showMessage(message);
+    }
+
+    public void show(String message,String action,View.OnClickListener onClickListener,int duration){
+        setAction(action,onClickListener);
+        setDuration(duration);
+        showMessage(message);
+    }
+
+    private void setDuration(int duration){
+        mSnackbar.setDuration(duration);
+    }
+
+    private void showMessage(String message){
         mSnackbar.setText(message).show();
     }
 
