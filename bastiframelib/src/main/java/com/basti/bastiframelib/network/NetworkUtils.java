@@ -1,14 +1,10 @@
 package com.basti.bastiframelib.network;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
-import com.basti.bastiframelib.utils.L;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -20,13 +16,13 @@ public class NetworkUtils {
 
     private NetworkCallback mCallback;
 
+    private AsyncHttpClient mClient;
     public NetworkUtils(NetworkCallback networkCallback){
         mCallback = networkCallback;
+        mClient = NetworkClient.createClient();
     }
 
     public void loadData(String url,RequestParams params,RequestMethod method, final int tag){
-
-        AsyncHttpClient client = NetworkClient.createClient();
 
         JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler(){
 
@@ -43,13 +39,30 @@ public class NetworkUtils {
 
         switch (method) {
             case GET:
-                client.get(url,jsonHttpResponseHandler);
+                mClient.get(url,jsonHttpResponseHandler).setTag(tag);
                 break;
             case POST:
-                client.post(url,params,jsonHttpResponseHandler);
+                mClient.post(url,params,jsonHttpResponseHandler).setTag(tag);
                 break;
         }
+    }
 
+    //取消网络请求
+
+    /*
+    通过Tag取消网络请求
+    参数 cancelRunning表示是否取消正在运行的请求
+     */
+    public void cancelRequestByTag(int tag,boolean cancelRunning){
+        mClient.cancelRequestsByTAG(tag, cancelRunning);
+    }
+
+    /*
+    取消当前client中所有网络请求
+    参数 cancelRunning表示是否取消正在运行的请求
+     */
+    public void cancelAllRequests(boolean cancelRunning){
+        mClient.cancelAllRequests(cancelRunning);
     }
 
     public enum RequestMethod{

@@ -1,12 +1,17 @@
 package com.basti.bastiframelib.base;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.basti.bastiframelib.network.NetworkCallback;
 import com.basti.bastiframelib.network.NetworkUtils;
-import com.basti.bastiframelib.utils.L;
+import com.basti.bastiframelib.utils.DialogUtils;
+import com.basti.bastiframelib.utils.LogUtils;
+import com.basti.bastiframelib.utils.SnackBarUtils;
+import com.basti.bastiframelib.utils.ToastUtils;
 import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.Header;
@@ -17,31 +22,95 @@ import cz.msebera.android.httpclient.Header;
 public class BaseActivity extends AppCompatActivity implements NetworkCallback {
 
     private NetworkUtils mNetworkUtils;
+    private LogUtils mLogUtils;
+    private ToastUtils mToastUtils;
+    private SnackBarUtils mSnackBarUtils;
+    private DialogUtils mDialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mNetworkUtils = new NetworkUtils(this);
+        mLogUtils = new LogUtils(this);
+        mToastUtils = new ToastUtils(this);
+        mSnackBarUtils = new SnackBarUtils(this);
+        mDialogUtils = new DialogUtils(this);
     }
 
     //post方法
-    public void postNetwork(String url,RequestParams params,int tag){
+    protected void postNetwork(String url,RequestParams params,int tag){
         mNetworkUtils.loadData(url,params, NetworkUtils.RequestMethod.POST,tag);
     }
 
     //get方法
-    public void getNetwork(String url,int tag){
+    protected void getNetwork(String url,int tag){
         mNetworkUtils.loadData(url,null, NetworkUtils.RequestMethod.GET,tag);
+    }
+
+    //取消网络请求
+    //参数cancelRequest表示是否取消正在运行的请求，默认false不取消
+    protected void cancelRequestByTag(int tag,boolean cancelRequest){
+        mNetworkUtils.cancelRequestByTag(tag, cancelRequest);
+    }
+
+    protected void cancelRequestByTag(int tag){
+        cancelRequestByTag(tag,false);
+    }
+
+    //打印Log日志的方法
+    //为了代码简洁方便，方法名取Log首字母
+    protected void L(String message){
+        mLogUtils.log(message);
+    }
+
+    //显示Toast
+    protected void showToast(String message){
+        mToastUtils.showToast(message);
+    }
+
+    //显示SnackBar，默认显示时间为Long
+    protected void showSnackBar(String message){
+        mSnackBarUtils.show(message);
+    }
+
+    //显示SnackBar,并能控制显示时间
+    protected void showSnackBar(String message,int duration){
+        mSnackBarUtils.show(message,duration);
+    }
+
+    //显示有操作的SnackBar,默认显示时间为Long
+    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener){
+        mSnackBarUtils.show(message,action,onClickListener);
+    }
+
+    //显示有操作的SnackBar,并能控制显示时间
+    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener,int duration){
+        mSnackBarUtils.show(message,action,onClickListener,duration);
+    }
+
+    //显示进度条 标题+信息
+    protected void showProgressDialog(boolean isShow,String title,String message){
+        mDialogUtils.showProgressDialog(isShow, title, message);
+    }
+
+    //显示进度条 只显示信息
+    protected void showProgressDialog(boolean isShow,String message){
+        showProgressDialog(isShow, "", message);
+    }
+
+    //显示/关闭进度条
+    protected void showProgressDialog(boolean isShow){
+        showProgressDialog(isShow, "", "");
     }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject result,int tag) {
-        L.log(true, "TAG", result.toString());
+        showProgressDialog(false);
     }
 
     @Override
     public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable,int tag) {
-        L.log(true,"TAG",result);
+        showProgressDialog(false);
     }
 }

@@ -2,19 +2,41 @@ package com.basti.bastiframesample;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.basti.bastiframelib.base.BaseActivity;
+import com.basti.bastiframelib.network.NetworkCallback;
 
-public class MainActivity extends BaseActivity{
+import cz.msebera.android.httpclient.Header;
+
+public class MainActivity extends BaseActivity implements NetworkCallback{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984",0);
-        //getNetwork("http://192.168.0.233:1499/get/z_entity?_field=fname");
-
+        L("TEST Log");
+        showToast("This is a Toast");
+        showSnackBar("This is a SnackBar with action", "getData", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressDialog(true,"提示","正在加载");
+                getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984", 0);
+                getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984", 1);
+            }
+        });
     }
 
+    @Override
+    public void onSuccess(int statusCode, Header[] headers, JSONObject result, int tag) {
+        super.onSuccess(statusCode, headers, result, tag);
+        L(result.toString());
+    }
+
+    @Override
+    public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable, int tag) {
+        super.onFailed(statusCode, headers, result, throwable, tag);
+    }
 }
