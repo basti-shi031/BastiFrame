@@ -17,7 +17,6 @@ public class BaseApplication extends Application{
         super.onCreate();
         //默认为调试模式
         setDebugMode(true);
-        LeakCanary.install(this);
         Fresco.initialize(this);
     }
 

@@ -1,6 +1,10 @@
 package com.basti.bastiframelib.network;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
+import com.basti.bastiframelib.utils.LogUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -15,11 +19,13 @@ import cz.msebera.android.httpclient.Header;
 public class NetworkUtils {
 
     private NetworkCallback mCallback;
+    private Context mContext;
 
     private AsyncHttpClient mClient;
-    public NetworkUtils(NetworkCallback networkCallback){
+    public NetworkUtils(NetworkCallback networkCallback,Context context){
         mCallback = networkCallback;
         mClient = NetworkClient.createClient();
+        mContext = context;
     }
 
     public void loadData(String url,RequestParams params,RequestMethod method, final int tag){
@@ -39,10 +45,10 @@ public class NetworkUtils {
 
         switch (method) {
             case GET:
-                mClient.get(url,jsonHttpResponseHandler).setTag(tag);
+                mClient.get(mContext,url,jsonHttpResponseHandler).setTag(tag);
                 break;
             case POST:
-                mClient.post(url,params,jsonHttpResponseHandler).setTag(tag);
+                mClient.post(mContext,url,params,jsonHttpResponseHandler).setTag(tag);
                 break;
         }
     }

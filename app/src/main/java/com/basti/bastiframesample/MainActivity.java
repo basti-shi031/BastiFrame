@@ -22,8 +22,9 @@ public class MainActivity extends BaseActivity implements NetworkCallback{
         showSnackBar("This is a SnackBar with action", "getData", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog(true,"提示","正在加载");
+                showProgressDialog(true, "提示", "正在加载");
                 getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984", 0);
+                //cancelRequestByTag(0,true);
                 getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984", 1);
             }
         });

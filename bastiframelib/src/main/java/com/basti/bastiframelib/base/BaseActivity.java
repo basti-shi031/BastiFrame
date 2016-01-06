@@ -31,7 +31,7 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mNetworkUtils = new NetworkUtils(this);
+        mNetworkUtils = new NetworkUtils(this,this);
         mLogUtils = new LogUtils(this);
         mToastUtils = new ToastUtils(this);
         mSnackBarUtils = new SnackBarUtils(this);
@@ -55,7 +55,12 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     }
 
     protected void cancelRequestByTag(int tag){
-        cancelRequestByTag(tag,false);
+        cancelRequestByTag(tag, false);
+    }
+
+    //取消全部网络请求
+    protected void cancelAllRequest(boolean cancelRunning){
+        mNetworkUtils.cancelAllRequests(cancelRunning);
     }
 
     //打印Log日志的方法
@@ -112,5 +117,11 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     @Override
     public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable,int tag) {
         showProgressDialog(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cancelAllRequest(true);
     }
 }

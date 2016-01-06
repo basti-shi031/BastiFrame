@@ -28,7 +28,7 @@ public class BaseFragment extends Fragment implements NetworkCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNetworkUtils = new NetworkUtils(this);
+        mNetworkUtils = new NetworkUtils(this,getActivity());
         mLogUtils = new LogUtils(getActivity());
         mToastUtils = new ToastUtils(getActivity());
         mSnackBarUtils = new SnackBarUtils(getActivity());
