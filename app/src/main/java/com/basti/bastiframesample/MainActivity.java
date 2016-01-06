@@ -103,7 +103,6 @@ public class MainActivity extends BaseCacheActivity{
         bt_ShowToast = (Button) findViewById(R.id.showToast);
         bt_ShowSnackbar = (Button) findViewById(R.id.showSnackbar);
 
-
         et_Username = (EditText) findViewById(R.id.username);
         et_Password = (EditText) findViewById(R.id.password);
 
