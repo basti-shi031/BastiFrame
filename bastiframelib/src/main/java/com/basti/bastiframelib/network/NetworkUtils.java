@@ -9,6 +9,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -34,12 +35,25 @@ public class NetworkUtils {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mCallback.onSuccess(statusCode, headers, JSON.parseObject(response.toString()),tag);
+                mCallback.onSuccess(statusCode, headers, JSON.parseObject(response.toString()), tag);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                mCallback.onFailed(statusCode,headers,responseString,throwable,tag);
+                mCallback.onFailed(statusCode, headers, responseString, throwable, tag);
+                Log.i("TAG","1");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.i("TAG", "2");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                mCallback.onInternetError(statusCode, headers, throwable, errorResponse);
             }
         };
 

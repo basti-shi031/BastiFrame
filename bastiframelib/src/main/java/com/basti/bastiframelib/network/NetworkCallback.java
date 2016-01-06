@@ -13,4 +13,6 @@ public interface NetworkCallback {
 
     void onFailed(int statusCode, Header[] headers, String result, Throwable throwable,int tag);
 
+    void onInternetError(int statusCode, Header[] headers, Throwable throwable, org.json.JSONObject errorResponse);
+
 }

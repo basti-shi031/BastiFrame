@@ -80,4 +80,9 @@ public class BaseFragment extends Fragment implements NetworkCallback {
     public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable, int tag) {
         showProgressDialog(false);
     }
+
+    @Override
+    public void onInternetError(int statusCode, Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
+        showProgressDialog(false);
+    }
 }

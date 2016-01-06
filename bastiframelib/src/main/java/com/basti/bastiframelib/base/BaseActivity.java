@@ -120,6 +120,11 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     }
 
     @Override
+    public void onInternetError(int statusCode, Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
+        showProgressDialog(false);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelAllRequest(true);
