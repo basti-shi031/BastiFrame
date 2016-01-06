@@ -45,6 +45,11 @@ public class BaseFragment extends Fragment implements NetworkCallback {
         mNetworkUtils.loadData(url,null, NetworkUtils.RequestMethod.GET,tag);
     }
 
+    //设置超时时间，默认为10s
+    public void setTimeout(int value){
+        mNetworkUtils.setTimeout(value);
+    }
+
     //打印Log日志的方法
     //为了代码简洁方便，方法名取Log首字母
     public void L(String message){
@@ -84,5 +89,11 @@ public class BaseFragment extends Fragment implements NetworkCallback {
     @Override
     public void onInternetError(int statusCode, Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
         showProgressDialog(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mNetworkUtils.cancelAllRequests(true);
     }
 }

@@ -30,7 +30,6 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mNetworkUtils = new NetworkUtils(this,this);
         mLogUtils = new LogUtils(this);
         mToastUtils = new ToastUtils(this);
@@ -45,7 +44,12 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
 
     //get方法
     protected void getNetwork(String url,int tag){
-        mNetworkUtils.loadData(url,null, NetworkUtils.RequestMethod.GET,tag);
+        mNetworkUtils.loadData(url, null, NetworkUtils.RequestMethod.GET, tag);
+    }
+
+    //设置超时时间，默认为10s
+    public void setTimeout(int value){
+        mNetworkUtils.setTimeout(value);
     }
 
     //取消网络请求
@@ -74,24 +78,13 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
         mToastUtils.showToast(message);
     }
 
-    //显示SnackBar，默认显示时间为Long
-    protected void showSnackBar(String message){
-        mSnackBarUtils.show(message);
+    //显示SnackBar
+    protected void showSnackbar(String message){
+        showSnackbar(message,"",null);
     }
-
-    //显示SnackBar,并能控制显示时间
-    protected void showSnackBar(String message,int duration){
-        mSnackBarUtils.show(message,duration);
-    }
-
-    //显示有操作的SnackBar,默认显示时间为Long
-    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener){
-        mSnackBarUtils.show(message,action,onClickListener);
-    }
-
-    //显示有操作的SnackBar,并能控制显示时间
-    protected void showSnackBar(String message,String action,View.OnClickListener onClickListener,int duration){
-        mSnackBarUtils.show(message,action,onClickListener,duration);
+    //显示带操作的SnackBar
+    protected void showSnackbar(String message,String action,View.OnClickListener onClickListener){
+        SnackBarUtils.show(this.getWindow().getDecorView().findViewById(android.R.id.content), message,action,onClickListener);
     }
 
     //显示进度条 标题+信息

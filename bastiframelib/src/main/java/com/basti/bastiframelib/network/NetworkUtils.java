@@ -23,10 +23,17 @@ public class NetworkUtils {
     private Context mContext;
 
     private AsyncHttpClient mClient;
+    private int mTimeout = 10*1000;
     public NetworkUtils(NetworkCallback networkCallback,Context context){
         mCallback = networkCallback;
         mClient = NetworkClient.createClient();
         mContext = context;
+        mClient.setTimeout(mTimeout);
+    }
+
+    public void setTimeout(int timeout){
+        mTimeout = timeout;
+        mClient.setTimeout(mTimeout);
     }
 
     public void loadData(String url,RequestParams params,RequestMethod method, final int tag){

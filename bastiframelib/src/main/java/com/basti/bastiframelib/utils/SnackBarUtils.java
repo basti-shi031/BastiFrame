@@ -1,8 +1,8 @@
 package com.basti.bastiframelib.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -19,10 +19,11 @@ public class SnackBarUtils {
     }
 
     private void setAction(String action,View.OnClickListener onClickListener){
-        mSnackbar.setAction(action,onClickListener);
+        mSnackbar.setAction(action, onClickListener);
     }
 
     public void show(String message){
+        Log.i("TAG",mSnackbar.toString());
         setAction("",null);
         setDuration(Snackbar.LENGTH_LONG);
         showMessage(message);
@@ -35,7 +36,7 @@ public class SnackBarUtils {
     }
 
     public void show(String message,String action,View.OnClickListener onClickListener){
-        setAction(action,onClickListener);
+        setAction(action, onClickListener);
         setDuration(Snackbar.LENGTH_LONG);
         showMessage(message);
     }
@@ -54,4 +55,13 @@ public class SnackBarUtils {
         mSnackbar.setText(message).show();
     }
 
+    public static void show(View v,CharSequence text,CharSequence action,View.OnClickListener onClickListener){
+        Snackbar snackbar = Snackbar.make(v, text, Snackbar.LENGTH_SHORT);
+
+        if (onClickListener != null||text.length() > 10){
+            snackbar.setAction(action,onClickListener);
+            snackbar.setDuration(Snackbar.LENGTH_LONG);
+        }
+        snackbar.show();
+    }
 }
