@@ -15,4 +15,6 @@ public interface NetworkCallback {
 
     void onInternetError(int statusCode, Header[] headers, Throwable throwable, org.json.JSONObject errorResponse);
 
+    void onProgress(long bytesWritten, long totalSize,int tag);
+
 }

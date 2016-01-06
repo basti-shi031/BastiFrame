@@ -17,6 +17,7 @@ public class MainActivity extends BaseCacheActivity{
     private Button bt_GetData,bt_ShowToast,bt_ShowSnackbar;
     private EditText et_Username,et_Password;
     private Button bt_Save,bt_Load,bt_Delete;
+    private Button bt_Upload,bt_downLoad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,13 @@ public class MainActivity extends BaseCacheActivity{
                 //cancelRequestByTag(0,true);
                 //getNetwork("https://api.heweather.com/x3/weather?cityid=CN101010100&key=a40167f9dba34922b9c7746c0a511984", 1);
                 //cancelAllRequest(true);
+            }
+        });
+
+        bt_Upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSnackbar("developing...");
             }
         });
 
@@ -64,21 +72,28 @@ public class MainActivity extends BaseCacheActivity{
 
                 String data = JSON.toJSONString(user);
                 L(data);
-                save(data,"/user.txt",0);
+                save(data, "/user.txt", 0);
             }
         });
 
         bt_Load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                load("/user.txt",0);
+                load("/user.txt", 0);
             }
         });
 
         bt_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delete("/user.txt",0);
+                delete("/user.txt", 0);
+            }
+        });
+
+        bt_downLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNetwork("http://www.wandoujia.com/apps/com.box.sjfood_v_1_0/binding",1);
             }
         });
     }
@@ -88,12 +103,16 @@ public class MainActivity extends BaseCacheActivity{
         bt_ShowToast = (Button) findViewById(R.id.showToast);
         bt_ShowSnackbar = (Button) findViewById(R.id.showSnackbar);
 
+
         et_Username = (EditText) findViewById(R.id.username);
         et_Password = (EditText) findViewById(R.id.password);
 
         bt_Save = (Button) findViewById(R.id.save);
         bt_Load = (Button) findViewById(R.id.load);
         bt_Delete = (Button) findViewById(R.id.delete);
+
+        bt_Upload = (Button) findViewById(R.id.upload);
+        bt_downLoad = (Button) findViewById(R.id.download);
     }
 
     @Override
@@ -105,6 +124,13 @@ public class MainActivity extends BaseCacheActivity{
     @Override
     public void onFailed(int statusCode, Header[] headers, String result, Throwable throwable, int tag) {
         super.onFailed(statusCode, headers, result, throwable, tag);
+    }
+
+    @Override
+    public void onProgress(long bytesWritten, long totalSize,int tag) {
+        super.onProgress(bytesWritten, totalSize,tag);
+        if (tag == 1)
+        L(bytesWritten+"    /    "+totalSize);
     }
 
     @Override

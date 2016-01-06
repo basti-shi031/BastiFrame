@@ -118,6 +118,11 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
     }
 
     @Override
+    public void onProgress(long bytesWritten, long totalSize,int tag) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelAllRequest(true);

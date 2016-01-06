@@ -97,6 +97,11 @@ public class BaseFragment extends Fragment implements NetworkCallback {
     }
 
     @Override
+    public void onProgress(long bytesWritten, long totalSize, int tag) {
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mNetworkUtils.cancelAllRequests(true);

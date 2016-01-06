@@ -62,6 +62,12 @@ public class NetworkUtils {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 mCallback.onInternetError(statusCode, headers, throwable, errorResponse);
             }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                super.onProgress(bytesWritten, totalSize);
+                mCallback.onProgress(bytesWritten, totalSize,tag);
+            }
         };
 
         switch (method) {
