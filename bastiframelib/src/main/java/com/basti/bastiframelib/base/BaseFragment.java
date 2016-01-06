@@ -2,6 +2,7 @@ package com.basti.bastiframelib.base;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.basti.bastiframelib.network.NetworkCallback;
@@ -57,8 +58,12 @@ public class BaseFragment extends Fragment implements NetworkCallback {
     }
 
     //显示SnackBar
-    protected void showSnackBar(String message){
-        mSnackBarUtils.show(message);
+    protected void showSnackbar(String message){
+        showSnackbar(message, "", null);
+    }
+    //显示带操作的SnackBar
+    protected void showSnackbar(String message,String action,View.OnClickListener onClickListener){
+        SnackBarUtils.show(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), message,action,onClickListener);
     }
 
     //显示进度条 标题+信息
